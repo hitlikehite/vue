@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>vfor和key</title>
+  <style></style>
+  <!--  -->
+</head>
+
+<body>
+  <div id="app">
+    <h1>vfor和key</h1>
+    <button @click="todos.reverse()">改变数组顺序</button>
+    <ul>
+      <!-- 不要使用 index，因为即便数据项的位置发生改变，但是索引不会变 -->
+      <!-- 索引不变，也就意味着 key 的顺序没有改变，那么 Vue 就不会处理 -->
+      <li
+        v-for="(item, index) in todos"
+        v-bind:key="item.id">
+        {{ item.title }}
+        <input type="text">
+      </li>
+    </ul>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        todos: [
+          { id: 1, title: '吃饭' },
+          { id: 2, title: '睡觉' },
+          { id: 3, title: '打豆豆' }
+        ]
+      },
+      methods: {
+      }
+    })
+  </script>
+</body>
+
+</html>

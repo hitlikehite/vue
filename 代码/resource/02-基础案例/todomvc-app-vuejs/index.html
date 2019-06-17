@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Template • TodoMVC</title>
+		<link rel="stylesheet" href="node_modules/todomvc-common/base.css">
+		<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
+		<!-- CSS overrides - remove if you don't need it -->
+		<link rel="stylesheet" href="css/app.css">
+		<style>
+			[v-cloak] {
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<!--
+			浏览器从上到下依次解析，当解析到这里的时候，入口节点满足 [v-cloalk] {...} css选择器
+			所以初始化的时候，Vue 模板是隐藏的。
+			当 Vue 解析替换完成之后，它会自动将 v-cloak 这个指令移除
+		 -->
+		<section class="todoapp" id="app" v-cloak>
+			<header class="header">
+				<h1>todos</h1>
+				<!--
+					原因：浏览器从上到下依次解析，解析到这里的时候，对于不认识的 {{ todos[0].title }} 会选择直接输出。
+					当 Vue 解析完成，就看不见这个表达式了。
+
+					解决方式：
+						方式一：v-text，和 {{ }} 功能是等价的，
+							使用麻烦，不够直观，而且无法脱离标签单独使用
+						方式二：v-cloak
+				 -->
+				<!-- <h1 v-text="todos[0].title"></h1>
+				<h1 v-text="todos[0].title"></h1>
+				<h1 v-text="todos[0].title"></h1>
+				<h1 v-text="todos[0].title"></h1>
+				<h1 v-text="todos[0].title"></h1>
+				<h1 v-text="todos[0].title"></h1> -->
+
+				<h1>{{ todos[0].title }}</h1>
+				<h1>{{ todos[0].title }}</h1>
+				<h1>{{ todos[0].title }}</h1>
+				<h1>{{ todos[0].title }}</h1>
+				<h1>{{ todos[0].title }}</h1>
+				<h1>{{ todos[0].title }}</h1>
+				<!--
+					添加任务
+				 -->
+				<input
+					class="new-todo"
+					placeholder="What needs to be done?"
+					autofocus
+					@keydown.enter="handleAdd"
+					v-model="inputText">
+			</header>
+			<!-- <template v-if="todos.length"> -->
+			<template v-if="todos.length > 0">
+				<!-- This section should be hidden by default and shown when there are todos -->
+				<section class="main">
+					<input id="toggle-all" class="toggle-all" type="checkbox">
+					<label for="toggle-all">Mark all as complete</label>
+					<ul class="todo-list">
+						<!-- These are here just to show the structure of the list items -->
+						<!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
+						<!--
+							任务项
+								completed 已完成
+								editing 编辑中
+								空     未完成
+						 -->
+
+						<li
+							:class="{ completed: item.completed, editing: currentEdit === item }"
+							v-for="(item, index) in todos"
+							:key="item.id">
+							<div class="view">
+								<input class="toggle" type="checkbox" v-model="item.completed">
+								<!--
+									当事件处理函数只有一句代码的时候， 我们可以直接写在模板中
+									注意：模板中访问数据不需要加 this
+								 -->
+								<label @dblclick="currentEdit = item">{{ item.title }}</label>
+								<button class="destroy" @click="handleDelete(index)"></button>
+							</div>
+							<input
+								class="edit"
+								:value="item.title"
+								@keydown.enter="handleSaveEdit(item, $event)"
+								@keydown.esc="handleCancelEdit">
+							<!-- <input class="edit" v-model="item.title"> -->
+							<!-- <input class="edit" value="Create a TodoMVC template"> -->
+						</li>
+						<!-- <li>
+							<div class="view">
+								<input class="toggle" type="checkbox">
+								<label>Buy a unicorn</label>
+								<button class="destroy"></button>
+							</div>
+							<input class="edit" value="Rule the web">
+						</li> -->
+					</ul>
+				</section>
+				<!-- This footer should hidden by default and shown when there are todos -->
+				<footer class="footer">
+					<!-- This should be `0 items left` by default -->
+					<span class="todo-count"><strong>{{ getRemainingCount() }}</strong> item left</span>
+					<!-- Remove this if you don't implement routing -->
+					<ul class="filters">
+						<li>
+							<a class="selected" href="#/">All</a>
+						</li>
+						<li>
+							<a href="#/active">Active</a>
+						</li>
+						<li>
+							<a href="#/completed">Completed</a>
+						</li>
+					</ul>
+					<!-- Hidden if no completed items are left ↓ -->
+					<!--
+						处理事件绑定可以使用函数之外，其它位置也可以使用
+						{{ 函数() }}
+						v-bind:属性="函数()"
+						说白了在表达式中也可以使用函数
+						语法注意：非 v-on 使用函数一定要 函数()
+						否则就把函数本身当做一个数据来使用了，而不是函数调用的结果
+					 -->
+					<button
+						class="clear-completed"
+						v-show="getClearCompletedStat()"
+						@click="handleClearCompleted"
+					>Clear completed</button>
+				</footer>
+			</template>
+		</section>
+		<footer class="info">
+			<p>Double-click to edit a todo</p>
+			<!-- Remove the below line ↓ -->
+			<p>Template by <a href="http://sindresorhus.com">Sindre Sorhus</a></p>
+			<!-- Change this out with your name and url ↓ -->
+			<p>Created by <a href="http://todomvc.com">you</a></p>
+			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+		</footer>
+		<!-- Scripts here. Don't remove ↓ -->
+		<!-- <script src="node_modules/todomvc-common/base.js"></script> -->
+		<!--
+			使用 vue.js
+			vue.min.js 无法使用 VueDevTools
+		 -->
+		<script src="node_modules/vue/dist/vue.js"></script>
+		<script src="js/app.js"></script>
+	</body>
+</html>

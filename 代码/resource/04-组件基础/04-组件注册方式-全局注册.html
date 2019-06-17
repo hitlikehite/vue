@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>组件注册方式-全局注册</title>
+  <style>
+    .com-a, .com-b, .com-c {
+      padding: 5px;
+      border: 1px solid #000;
+    }
+  </style>
+  <!--  -->
+</head>
+
+<body>
+  <div id="app">
+    <h1>组件注册方式-全局注册</h1>
+    <com-a></com-a>
+    <br>
+    <com-b></com-b>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <script>
+    Vue.component('com-a', {
+      template: `
+        <div class="com-a">
+          <p>com-a 组件</p>
+          <com-b></com-b>
+          <br />
+          <!-- <com-c></com-c> -->
+        </div>
+      `,
+      components: {
+        // key: 组件名，value：组件选项对象，组件有什么，它也就有什么
+        comB: {
+          template: `
+            <div class="com-b">
+              <p>com-b 局部组件</p>
+              <com-c></com-c>
+            </div>
+          `,
+          components: {
+            comC: {
+              template: `
+                <div class="com-c">
+                  <p>com-c 组件</p>
+                </div>
+              `
+            }
+          }
+        }
+      }
+    })
+
+    Vue.component('com-b', {
+      template: `
+        <div class="com-b">
+          <p>com-b 全局组件</p>
+        </div>
+      `
+    })
+
+    const app = new Vue({
+      el: '#app',
+      data: {},
+      methods: {}
+    })
+  </script>
+</body>
+
+</html>

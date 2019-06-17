@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <!-- 
+    数据驱动视图：
+      Vue 管理的模板中，一旦模板绑定的数据发生变化，也会导致视图变化
+      说白了，data 中的数据发生改变，则视图也跟着改变
+      问题是如何修改 data 中的数据？
+   -->
+
+   <style>
+     .box {
+      width: 200px;
+      height: 200px;
+      background-color: hotpink;
+     }
+   </style>
+</head>
+<body>
+  <div id="app">
+    <!-- 数据绑定，mustache 语法 -->
+    <h1>{{ message }}</h1>
+    <p>{{ message }}</p>
+    <span>{{ message }}</span>
+    <div>{{ message }}</div>
+    <p>姓名：{{ user.name }}</p>
+    <p>年龄：{{ user.age }}</p>
+    <p>性别：{{ user.gender === 0 ? '女' : '男' }}</p>
+    <ul>
+      <!-- {{ each }}
+      <li>{{ $value }}</li>
+      {{ /each }} -->
+      <!-- 
+        遍历语法：v-for="遍历项 in 数据源"
+       -->
+      <li v-for="item in todos">{{ item }}</li>
+    </ul>
+    <div>
+      <span v-for="item in todos">{{ item + ' ' }}</span>
+    </div>
+
+    <!-- 
+      条件判断：v-if="布尔值"
+      true 显示
+      false 不显示
+     -->
+    <div class="box" v-if="seen"></div>
+  </div>
+
+  <script src="js/vue.js"></script>
+
+  <script>
+    const app = new Vue({
+      // 告诉 Vue 模板的入口在哪里
+      // 它会找到这个入口，然后解析替换里面的内容
+      el: '#app',
+
+      // 模板数据，可以直接在被 Vue 管理的模板中使用
+      data: {
+        message: 'Hello Vue.js!',
+        user: {
+          name: '张三',
+          age: 18,
+          gender: 0
+        },
+        todos: [ '吃饭', '睡觉', '打豆豆'],
+        seen: true
+      }
+    })
+
+    // 我们可以定义一个成员来接受 new Vue 得到的实例对象
+    // 实例对象就可以访问到 data 中的数据
+    //    app.data.xxx 错误
+    //    直接 app.data的成员，例如 app.message、app.user.name
+    //    
+  </script>
+</body>
+</html>
+    

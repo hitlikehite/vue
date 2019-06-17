@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>axios的使用</title>
+  <style></style>
+  <!--  -->
+</head>
+
+<body>
+  <div id="app">
+    <h1>axios的使用</h1>
+    <h2>发送GET请求</h2>
+    <button id="get">点击测试</button>
+    <h2>发送GET请求-GET传参</h2>
+    <button id="get-params">点击测试</button>
+    <h2>发送POST请求</h2>
+    <button id="post">点击测试</button>
+    <h2>发送PATCH请求</h2>
+    <button id="patch">点击测试</button>
+    <h2>发送DELETE请求</h2>
+    <button id="delete">点击测试</button>
+  </div>
+  <!-- <script src="node_modules/axios/dist/axios.js"></script> -->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    // 看文档，try-try-see
+    const oGet = document.querySelector('#get'),
+      oPost = document.querySelector('#post'),
+      oPatch = document.querySelector('#patch'),
+      oDelete = document.querySelector('#delete')
+      oGETParams = document.querySelector('#get-params')
+
+    oGet.addEventListener('click', function () {
+      axios({
+        method: 'GET', // 请求方法，大小写无所谓，建议大写
+        url: 'http://localhost:3000/heros', // 请求地址
+      }).then(function (res) {
+        // axios 默认给你的是一个响应对象结果，响应对象中的 data 是具体的接口返回数据
+        console.log(res.data)
+      })
+    })
+
+    oGETParams.addEventListener('click', function () {
+      const name = '李白'
+      axios({
+        method: 'GET', // 请求方法，大小写无所谓，建议大写
+        url: 'http://localhost:3000/heros', // 请求地址
+        // url: 'http://localhost:3000/heros?name=' + name, // 请求地址
+        // url: 'http://localhost:3000/heros?name=李白', // 请求地址
+        params: { // GET 查询参数
+          // 等价于 name: name
+          name: name
+        },
+      }).then(function (res) {
+        // axios 默认给你的是一个响应对象结果，响应对象中的 data 是具体的接口返回数据
+        console.log(res.data)
+      })
+    })
+
+    oPost.addEventListener('click', function () {
+      const hero = {
+        name: '小书包',
+        bio: '智商250，嘟嘟嘟。。。'
+      }
+
+      axios({
+        method: 'POST', // 请求方法，大小写无所谓，建议大写
+        url: 'http://localhost:3000/heros', // 请求地址
+        data: hero // data 选项用来传递 POST 请求体
+      }).then(function (res) {
+        // axios 默认给你的是一个响应对象结果，响应对象中的 data 是具体的接口返回数据
+        console.log(res.data)
+      })
+    })
+
+    oPatch.addEventListener('click', function () {
+      const hero = {
+        name: '豆豆'
+      }
+      const id = 5
+      axios({
+        method: 'PATCH', // 请求方法，大小写无所谓，建议大写
+        url: `http://localhost:3000/heros/${id}`, // 请求地址
+        // url: 'http://localhost:3000/todos/' + id, // 请求地址
+        data: hero // data 中放置要修改的数据内容悐
+      }).then(function (res) {
+        // axios 默认给你的是一个响应对象结果，响应对象中的 data 是具体的接口返回数据
+        console.log(res.data)
+      })
+    })
+
+    oDelete.addEventListener('click', function () {
+      const id = 3
+      axios({
+        method: 'DELETE', // 请求方法，大小写无所谓，建议大写
+        url: `http://localhost:3000/heros/${id}`, // 请求地址
+        // url: 'http://localhost:3000/todos/' + id, // 请求地址
+      }).then(function (res) {
+        // axios 默认给你的是一个响应对象结果，响应对象中的 data 是具体的接口返回数据
+        console.log(res.data)
+      })
+    })
+
+    /**
+     * axios 也提供了请求方法的快捷方式
+     * axios.request(config)
+     * axios.get(url[, config])
+     * axios.delete(url[, config])
+     * axios.head(url[, config])
+     * axios.options(url[, config])
+     * axios.post(url[, data[, config]])
+     * axios.put(url[, data[, config]])
+     * axios.patch(url[, data[, config]])
+     */
+    
+    // 例如：
+    // axios.get('http://localhost:3000/todos').then(res => {
+    //   console.log(res.data)
+    // })
+
+    // axios.get('http://localhost:3000/todos?id=4').then(res => {
+    //   console.log(res.data)
+    // })
+
+    // const id = 5
+
+    // axios.get('http://localhost:3000/todos', {
+    //   params: {
+    //     // 等价于 id: id
+    //     id
+    //   }
+    // }).then(res => {
+    //   console.log(res.data)
+    // })
+
+  </script>
+</body>
+
+</html>

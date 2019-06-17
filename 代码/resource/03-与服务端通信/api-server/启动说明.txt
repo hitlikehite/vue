@@ -1,0 +1,2 @@
+Windows 用户直接双击 启动服务.bat 即可。
+非 Windows 用户，打开命令行，进入api-server 目录，输入 npm start 回车启动。

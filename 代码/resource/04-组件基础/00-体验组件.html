@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>体验组件</title>
+  <style></style>
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <!--  -->
+</head>
+
+<body>
+  <div id="app">
+    <h1>体验组件</h1>
+    <h2>Button 按钮</h2>
+    <el-button>默认按钮</el-button>
+    <el-button type="primary">主要按钮</el-button>
+    <el-button type="success">成功按钮</el-button>
+    <el-button type="info">信息按钮</el-button>
+    <el-button type="warning">警告按钮</el-button>
+    <el-button type="danger">危险按钮</el-button>
+    <h2>Input 输入框</h2>
+    <el-input v-model="input" placeholder="请输入内容" clearable></el-input>
+    <h2>计数器</h2>
+    <el-input-number
+      v-model="num"
+      :min="1"
+      :max="50"
+      label="描述文字"
+    ></el-input-number>
+    <h2>日期选择器</h2>
+    <el-date-picker
+      v-model="value1"
+      type="date"
+      placeholder="选择日期">
+    </el-date-picker>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <!-- 引入组件库 -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        input: '',
+        num: 1,
+        value1: ''
+      },
+      methods: {}
+    })
+  </script>
+</body>
+
+</html>

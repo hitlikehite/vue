@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Vue-事件处理</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1>事件处理</h1>
+    <h2>基本语法</h2>
+    <button v-on:click="handleClick">测试</button>
+    <p>可以简写</p>
+    <button @click="handleClick2">测试</button>
+    <p>不要使用箭头函数定义事件处理函数</p>
+    <button @click="handleClick3">测试</button>
+
+    <h2>默认参数</h2>
+    <p>事件处理函数默认接受一个参数：event 事件对象</p>
+    <button @click="handleClick4">测试</button>
+
+    <h2>事件传参</h2>
+    <p>事件传参</p>
+    <ul>
+      <li v-for="item in todos">
+        {{ item }}  <button @click="handleClick5(item)">测试</button>
+      </li>
+    </ul>
+    <p>如果想要在手动传递了参数的情况下还得到默认的 event 事件对象</p>
+    <p>$event 是固定的语法 API，在这里就表示那个事件对象</p>
+    <button @click="handleClick6(123, $event)">测试</button>
+  </div>
+  <script src="js/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        message: 'Hello Vue.js!',
+        todos: ['吃饭', '睡觉', '打豆豆']
+      },
+      methods: {
+        handleClick () {
+          console.log('handleClick')
+        },
+        handleClick2 () {
+          console.log('handleClick2')
+        },
+        handleClick3: () => {
+          console.log('handleClick3', this)
+        },
+        handleClick4 (e) {
+          console.log(e)
+        },
+        handleClick5 (item) {
+          console.log(item)
+        },
+        handleClick6 (arg1, arg2) {
+          console.log(arg1, arg2)
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

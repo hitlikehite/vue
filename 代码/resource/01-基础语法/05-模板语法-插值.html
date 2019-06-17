@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Vue.js-模板语法-插值</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1>模板语法 - 插值</h1>
+    <h2>文本</h2>
+    <p>{{ message }}</p>
+    <span>{{ message }}</span>
+    <strong>{{ message }}</strong>
+    <div>{{ message }}</div>
+    <hr>
+    {{ message }}
+
+    <h2>JavaScript 表达式</h2>
+    <p>{{ 1 + 1 }}</p>
+    <span>{{ message + ' abc' }}</span>
+    <p>{{ age >= 18 ? '已成年' : '未成年'  }}</p>
+    <p>{{ message.split('').reverse().join('') }}</p>
+
+    <!-- 不要想太多 -->
+    <!-- <p>{{ var a = 1; console.log(a); }}</p> -->
+    <!-- <p>{{ [1, 2, 3].forEach() }}</p> -->
+
+    <h2>特性：标签的属性绑定</h2>
+    <p title="hello world">鼠标放上来你就看到我了</p>
+    
+    <!-- 错误的写法 -->
+    <!-- <p title="{{ message }}">鼠标放上来你就看到我了</p> -->
+
+    <!-- 
+      语法：v-bind:属性名="JavaScript表达式"
+      注意：这里的 JavaScript 表达式和 {{ }} 中的 JavaScript 表达式写法一样
+    -->
+    <p v-bind:title="message">鼠标放上来你就看到我了</p>
+    <p v-bind:title="1 + 1">鼠标放上来你就看到我了</p>
+    <p v-bind:title="message + ' abc'">鼠标放上来你就看到我了</p>
+    <p v-bind:title="age >= 18 ? '已成年' : '未成年'">鼠标放上来你就看到我了</p>
+    <p v-bind:title="message.split('').reverse().join('')">鼠标放上来你就看到我了</p>
+
+    <!-- v-bind 可以简写为一个 : -->
+    <hr>
+    <p :title="message">鼠标放上来你就看到我了</p>
+    <p :title="1 + 1">鼠标放上来你就看到我了</p>
+    <p :title="message + ' abc'">鼠标放上来你就看到我了</p>
+    <p :title="age >= 18 ? '已成年' : '未成年'">鼠标放上来你就看到我了</p>
+    <p :title="message.split('').reverse().join('')">鼠标放上来你就看到我了</p>
+    <a :href="url">去百度</a>
+
+    <h2>原始html</h2>
+    <!-- 如果你绑定的内容是 html 字符串，那么使用 {{}} 只会当做字符串去输出 -->
+    <div>{{ htmlStr }}</div>
+    <!-- 如果想把 html 字符串当做标签去渲染输出 -->
+    <div v-html="htmlStr"></div>
+  </div>
+  <script src="js/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        message: 'Hello Vue.js!',
+        age: 18,
+        url: 'http://baidu.com',
+        htmlStr: `
+          <div>
+            <p>hello world</p>
+            <strong>哈哈哈</strong>
+          </div>
+        `
+      },
+      methods: {}
+    })
+  </script>
+</body>
+
+</html>

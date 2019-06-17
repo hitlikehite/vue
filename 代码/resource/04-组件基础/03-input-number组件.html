@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>input-number</title>
+  <style></style>
+  <!--  -->
+</head>
+
+<body>
+  <div id="app">
+    <h1>input-number</h1>
+
+    <!-- 
+      input-number 组件
+      当我们有一个这样的需求：
+        父组件的数据影响子组件
+        子组件的修改同步回父组件
+      
+      在组件上使用 v-model 指令，相当于：
+        v-bind:value="searchText"
+        v-on:input="searchText = $event"
+
+      例如你在一个组件上去 v-model="count"
+      就相当于：
+        v-bind:value="count"
+        v-on:input=""
+
+
+
+      参数说明：
+        count 需要同步的数字
+        min   最小值
+        max   最大值
+
+      都是所有组件都需要 v-model，v-model 主要针对需要数据同步的场景，
+      例如你封装一个 button 按钮完全没必要。
+
+      Props Down
+        Props 数据是动态的
+        Props 数据是只读，不可改，修改不会影响到外部，所以没有意义
+     -->
+    <!-- <input-number2
+      :value="count"
+      @input="handleInput"
+      :min="1"
+      :max="20"
+    ></input-number2> -->
+
+    <!-- <input-number2
+      :value="count"
+      @input="count = $event"
+      :min="1"
+      :max="20"
+    ></input-number2> -->
+
+    <input-number2
+      v-model="count"
+      :min="1"
+      :max="20"
+    ></input-number2>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <script src="components/input-number2.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        count: 10
+      },
+      methods: {
+        handleInput (a) {
+          console.log(a)
+          this.count = a
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

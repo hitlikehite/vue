@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Vue配合axios</title>
+  <style>
+    .form {
+      border: 1px solid #000;
+      padding: 10px;
+    }
+  </style>
+  <!-- 
+    axios 负责拿数据
+    Vue 负责处理视图
+   -->
+</head>
+
+<body>
+  <div id="app">
+    <h1>Vue配合axios</h1>
+    <button @click="handleLoadHeros">点击获取英雄列表数据</button>
+    <form class="form">
+      <div>
+        <label for="">名称</label>
+        <input type="text" v-model="formData.name">
+      </div>
+      <div>
+        <label for="">简介</label>
+        <textarea cols="30" rows="10" v-model="formData.bio"></textarea>
+      </div>
+      <div>
+        <!-- .prevent 事件修饰符，阻止元素的默认事件行为 -->
+        <button @click.prevent="handleAdd">添加</button>
+        <!-- <button type="button" @click="handleAdd">添加</button> -->
+      </div>
+    </form>
+    <table>
+      <thead>
+        <tr>
+          <th>名称</th>
+          <th>简介</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in heros" :key="item.id">
+          <td>{{ item.name }}</td>
+          <td>{{ item.bio }}</td>
+          <td>
+            <button @click="handleDelete(item)">删除</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        heros: [],
+        formData: {
+          name: '',
+          bio: ''
+        }
+      },
+      // Vue 实例初始化完成以后，会自动调用该函数
+      // 我们可以把需要在初始的时候执行的一个业务代码写到这里
+      // 该函数中的 this 也指向 Vue 实例
+      // 注意：不要使用箭头函数来定义它
+      // Vue 实例除了可以直接访问 data 中的数据成员，也可以直接访问 methods 中的函数成员
+      created () {
+        this.handleLoadHeros()
+      },
+      methods: {
+        handleLoadHeros () {
+          // 不要过度依赖 Vue DevTools
+          axios({
+            method: 'GET',
+            url: 'http://localhost:3000/heros'
+          }).then(res => {
+            console.log(res.data)
+            this.heros = res.data
+            console.log(this.heros)
+          })
+        },
+
+        handleDelete (item) {
+          if (!window.confirm('确认删除吗？')) {
+            return
+          }
+
+          axios({
+            method: 'DELETE',
+            // url: '/heros/' + item.id
+            url: `http://localhost:3000/heros/${item.id}`
+          }).then(res => {
+            // 刷新数据列表
+            // 实例也可以直接访问 methods 中的数据成员
+            // 所以可以在 methods 函数中通过 Vue 实例调用另一个 methods 函数
+            this.handleLoadHeros()
+          })
+        },
+
+        handleAdd (e) {
+          // e.preventDefault()
+          // 获取表单数据
+          const formData = this.formData
+
+          // 提交
+          axios({
+            method: 'POST',
+            url: 'http://localhost:3000/heros',
+            data: formData
+          }).then(res => {
+            // 刷新列表数据
+            this.handleLoadHeros()
+
+            // 清空表单
+            for (let key in this.formData) {
+              this.formData[key] = ''
+            }
+          })
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

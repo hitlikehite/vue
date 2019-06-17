@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Vue-条件渲染</title>
+  <!-- 
+    决定元素是否显示与隐藏
+    v-if
+      语法：<元素 v-if="表达式"></元素>
+    v-show
+      语法：<元素 v-show="表达式"></元素>
+
+    两者都是：
+      true 显示
+      false 不显示
+
+    区别：
+      v-if
+        true 渲染该元素
+        false 不渲染该元素
+        可以结合使用 v-else-if 或者 v-else
+      v-show 只是简单的控制 display 是 none 还是 block
+        true display: block
+        false display: none
+        v-show 不能和 v-else | v-else-if 使用
+
+    结论：
+      一般来说，v-if 有更高的切换开销，而 v-show 有更高的初始渲染开销。因此，如果需要非常频繁地切换，则使用 v-show 较好；如果在运行时条件很少改变，则使用 v-if 较好。
+   -->
+  <style>
+    .box {
+      width: 100px;
+      height: 100px;
+      background-color: #f40;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <h1>条件渲染</h1>
+    
+    <h2>v-if</h2>
+    <div class="box" v-if="seen">v-if 控制的元素</div>
+    
+    <h2>v-else-if|v-else</h2>
+    <p v-if="age > 0 && age < 6">儿童</p>
+    <p v-else-if="age > 6 && age < 18">少年</p>
+    <p v-else>成年</p>
+    
+    <h2>v-show</h2>
+    <div class="box" v-show="seen">v-show 控制的元素</div>
+    
+    <h2>v-if 和 v-show 的区别</h2>
+
+    <h2>v-if 和 template</h2>
+    <p>如果想在不增加额外的节点的情况下去控制多个相同等级的标签，可以使用 v-if 结合 template</p>
+    <p>注意：template 上不能使用 v-show</p>
+    <template v-if="isLogin">
+      <p>发布</p>
+      <p>退出</p>
+    </template>
+    <template v-else>
+      <p>登录</p>
+      <p>注册</p>
+    </template>
+    
+  </div>
+  <script src="js/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        message: 'Hello Vue.js!',
+        seen: true,
+        age: 18,
+        isLogin: true
+      },
+      methods: {}
+    })
+  </script>
+</body>
+
+</html>

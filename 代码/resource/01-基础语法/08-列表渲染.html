@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Vue-列表渲染</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1>列表渲染</h1>
+    <h2>遍历数组</h2>
+    
+    <p>基本写法</p>
+    <ul>
+      <li v-for="item in todos">{{ item }}</li>
+    </ul>
+    
+    <p>还可以拿到索引</p>
+    <ul>
+      <li v-for="(item, index) in todos">{{ index }} - {{ item }}</li>
+    </ul>
+
+    <h2>数组变更检测</h2>
+    <pre>
+      push()
+      pop()
+      shift()
+      unshift()
+      splice()
+      sort()
+      reverse()
+      或者：直接对数组重新赋值，例如
+      app.todos = ['a', 'b'] 也会触发视图更新
+    </pre>
+    <pre>
+      注意1：语法 数组[索引] = xxx 不会触发视图更新
+            数组[索引] = xxx 重新赋值不会触发视图更新
+            但是 数组[索引].xxx = xxx 修改元素成员是可以的
+      如何解决？
+      Vue.set(数组, 索引, 值)
+      或者 Vue实例.$set(数组, 索引, 值)
+      例如我们可以在函数中去 this.$set(数组, 索引, 值)
+    </pre>
+    
+    <ul>
+      <li v-for="item in todos2">{{ item.title }}</li>
+    </ul>
+
+    <h2>遍历对象</h2>
+    <p>基本语法</p>
+    <p v-for="value in user">{{ value }}</p>
+    <p>获取key</p>
+    <p v-for="(value, key) in user">{{ key + ' - ' + value }}</p>
+
+    <h2>对象变更检测</h2>
+    <pre>
+      会触发视图更新
+        对象.xxx = xxx
+        对象 = xxx
+      注意：
+        对象.不存在的成员 = xxx 不会触发视图更新
+        解决方式：
+          方式一：对象 = xxx
+          方式二：Vue.set(对象, '属性名', 属性值)
+                  Vue实例.$set(对象, 属性名, 属性值)
+    </pre>
+    <p>{{ user.weight }}</p>
+    
+    <h2>使用值范围</h2>
+    <!-- var i = 1; i <= 10; i++ -->
+    <span v-for="n in 10">{{ n }}</span>
+
+    <h2>v-for 和 key</h2>
+    <ul>
+      <!-- 
+        为你的遍历元素添加一个唯一的 key
+        key 最好使用 数字、字符串，保证唯一性
+       -->
+      <li
+        v-for="(item, index) in todos"
+        v-bind:key="index">
+        {{ item }}
+        <input type="text">
+      </li>
+    </ul>
+  </div>
+  <script src="js/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        message: 'Hello Vue.js!',
+        todos: ['吃饭', '睡觉'],
+        todos2: [
+          { id: 1, title: '吃饭' },
+          { id: 2, title: '睡觉' }
+        ],
+        user: {
+          name: '张三',
+          age: 18,
+          gender: '男',
+          // weight: 70
+        }
+      },
+      methods: {}
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>生命周期</title>
+  <style></style>
+  <!-- 
+    生命周期函数：满足一定时机会自动调用，我们可以在这些函数中加入一些自定义业务逻辑代码
+
+    初始阶段：适合做一些初始化操作的代码，例如初始的时候发请求
+      C 创建阶段：一上来就调用，之后再也不会调用了
+        beforeCreate  创建前
+        created       创建后
+      M 挂载阶段：紧接着创建阶段调用，之后再也不会调用了
+        beforeMount 挂载前(使用少，了解即可)
+        mounted     挂载后（使用多）
+          常用语在初始的时候进行一些 DOM  操作
+          例如我们后面项目中会用到 echarts 图表库、百度地图 第三方需要操作 DOM 的库。
+    更新阶段：适合每当数据驱动视图更新的时候做一些操作(很少用)
+      U 更新阶段，只要发生数据驱动视图，就会调用
+        beforeUpdate 更新前
+        updated      更新后
+    卸载阶段：适合在卸载的时候做的一些操作代码，例如清除定时器之类的
+      D 卸载阶段，当 Vue 实例卸载了的时候调用
+        beforeDestroy 卸载前
+        destroyed     卸载后
+   -->
+</head>
+
+<body>
+  <div id="app">
+    <h1>生命周期</h1>
+    <p>{{ message }}</p>
+    <p>{{ count }}</p>
+    <input type="text" v-model="message">
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        message: 'hello world',
+        count: 0,
+        timer: null
+      },
+      beforeCreate () { // 使用非常少，了解即可
+        console.log('============= beforeCreate ===============')
+        console.log('data => ', this.message)
+        console.log('$el => ', this.$el)
+        console.log('\n\n')
+      },
+
+      created () { // 使用多，最先能访问到 data 数据的函数，例如我们经常在这里初始的时候发送请求
+        console.log('============= created ===============')
+        console.log('data => ', this.message)
+        console.log('$el => ', this.$el)
+        console.log('\n\n')
+        this.timer = setInterval(() => {
+          console.log('setInterval')
+          this.count++
+        }, 1000)
+      },
+
+      beforeMount () {
+        console.log('============= beforeMount ===============')
+        console.log('data => ', this.message)
+        console.log('$el => ', this.$el.innerHTML)
+        console.log('\n\n')
+      },
+
+      mounted () {
+        console.log('============= mounted ===============')
+        console.log('data => ', this.message)
+        console.log('$el => ', this.$el.innerHTML)
+        console.log('\n\n')
+      },
+
+      beforeUpdate () {
+        console.log('============= beforeUpdate ===============')
+        console.log('\n\n')
+      },
+
+      updated () {
+        console.log('============= updated ===============\n\n')
+      },
+
+      beforeDestroy () {
+        console.log('============= beforeDestroy ===============\n\n')
+        window.clearInterval(this.timer)
+      },
+
+      destroyed () {
+        console.log('============= destroyed ===============\n\n')
+      },
+
+      methods: {},
+    })
+  </script>
+</body>
+
+</html>

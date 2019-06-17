@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <!-- 
+    Vue 让数据绑定更轻松
+    1. 下载 vue
+    2. 引入 vue.js 到页面中
+    3. new Vue 实例
+      配置 el   模板入口
+      配置 data 数据
+      使用模板语法绑定数据
+   -->
+
+   <style>
+     .box {
+      width: 200px;
+      height: 200px;
+      background-color: hotpink;
+     }
+   </style>
+</head>
+<body>
+  <div id="app">
+    <!-- 数据绑定，mustache 语法 -->
+    <h1>{{ message }}</h1>
+    <p>姓名：{{ user.name }}</p>
+    <p>年龄：{{ user.age }}</p>
+    <p>性别：{{ user.gender === 0 ? '女' : '男' }}</p>
+    <ul>
+      <!-- {{ each }}
+      <li>{{ $value }}</li>
+      {{ /each }} -->
+      <!-- 
+        遍历语法：v-for="遍历项 in 数据源"
+       -->
+      <li v-for="item in todos">{{ item }}</li>
+    </ul>
+
+    <!-- 
+      条件判断：v-if="布尔值"
+      true 显示
+      false 不显示
+     -->
+    <div class="box" v-if="seen"></div>
+  </div>
+
+  <script src="js/vue.js"></script>
+
+  <script>
+    new Vue({
+      // 告诉 Vue 模板的入口在哪里
+      // 它会找到这个入口，然后解析替换里面的内容
+      el: '#app',
+
+      // 模板数据，可以直接在被 Vue 管理的模板中使用
+      data: {
+        message: 'Hello Vue.js!',
+        user: {
+          name: '张三',
+          age: 18,
+          gender: 0
+        },
+        todos: [ '吃饭', '睡觉', '打豆豆'],
+        seen: false
+      }
+    })
+  </script>
+</body>
+</html>
+    

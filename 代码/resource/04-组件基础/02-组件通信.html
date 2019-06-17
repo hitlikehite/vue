@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>组件通信</title>
+  <style></style>
+  <!--  -->
+</head>
+
+<body>
+  <div id="app">
+    <h1>组件通信</h1>
+    <!-- 
+      我们可以让这个组件支持配置，加减范围最大值和最小值
+      组件传参：
+       在哪里使用就给谁传
+      调用组件
+      通过标签属性为组件传递参数
+      参数名：组件的设计者来决定
+     -->
+    <!-- <input-number
+      :min="5"
+      :max="10"></input-number> -->
+    <!-- <button @click="handleLog">打印 input-number 的 count</button> -->
+
+    <!-- 
+      Props Down 从外往内传
+        1. 语法
+        2. 动态数据绑定
+          如果 Props 绑定的动态数据成员，那么数据的改变也会影响 Props 的变化
+          但是：反之不会
+            无法在组件内部修改 props 数据
+            说白了：props 数据只能用，不能改
+            可以改，但是不会将修改影响到外部
+            即便你修改，它还是受外部影响
+            即便能改，也不牢靠
+      Events Up 从内往外传
+        1. 在组件内部满足条件的时候使用 this.$emit() 方法发布一个自定义事件
+              this.$emit('事件名称', [可选参数])
+        2. 在使用组件的标签上通过 @事件名称="处理函数的" 的方式来监听这个自定义事件
+     -->
+    <input-number
+      :min="min"
+      :max="10"
+      @hello="handleHello"></input-number>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <script src="components/input-number.js"></script>
+  <script>
+    // 启动 Vue
+    const app = new Vue({
+      el: '#app',
+      data: {
+        min: 1,
+        count: 0
+      },
+      methods: {
+        handleLog () {
+        },
+        handleHello (data) {
+          console.log(data)
+          // console.log(data)
+
+          // 将接收到的结果数据同步到当前的 count 中
+          // this.count = data
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

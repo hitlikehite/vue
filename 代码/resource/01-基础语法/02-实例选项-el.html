@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Vue-实例选项-el</title>
+</head>
+
+<!-- [Vue warn]: Do not mount Vue to <html> or <body> - mount to normal elements instead. -->
+<!-- <body id="app"> -->
+<body>
+  <div id="app">
+    <h1>{{ message }}</h1>
+  </div>
+  <hr>
+  <div id="app2">
+    <h1>{{ message }}</h1>
+  </div>
+  <script src="js/vue.js"></script>
+  <script>
+    // 页面加载
+    // 加载 vue.js 脚本
+    // 当 vue.js 脚本加载完成，
+    // 执行 new Vue 代码
+    // 根据 el 找到模板入口，解析替换
+    const app = new Vue({
+      // el element元素的意思
+      // 不能是 html、body 元素
+      // 入口只能是一个，多了也不管
+      el: '#app',
+      // el: 'div',
+      data: {
+        message: 'app message'
+      }
+    })
+
+    // 注意：我们很少这样使用，
+    // 一般一个页面使用一个 Vue 实例就够了
+    // 其它的我们通常会使用组件的方式来管理多个模板
+    const app2 = new Vue({
+      // el element元素的意思
+      // 不能是 html、body 元素
+      // 入口只能是一个，多了也不管
+      el: '#app2',
+      // el: 'div',
+      data: {
+        message: 'app2 message'
+      }
+    })
+  </script>
+</body>
+
+</html>

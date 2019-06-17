@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Vue-实例选项-data</title>
+  <!-- 
+    1. 视图中只能使用 vue 实例中的数据，例如 data 中的数据
+    2. 模板中使用的数据一定要在 Vue 实例中进行初始化，哪怕没有值也给个空就可以了
+   -->
+</head>
+
+<body>
+  <div id="app">
+    <h1>{{ message }}</h1>
+    <!-- 
+      vue.js:634 [Vue warn]: Property or method "foo" is not defined on the instance but referenced during render.
+      你使用了一个非 Vue 实例中的成员
+     -->
+    <!-- <h2>{{ foo }}</h2> -->
+
+    <p>{{ name }}</p>
+  </div>
+  <script src="js/vue.js"></script>
+  <script>
+    const foo = 'bar'
+
+    const app = new Vue({
+      el: '#app',
+      data: {
+        message: 'Hello Vue.js!',
+        name: ''
+      }
+    })
+  </script>
+</body>
+
+</html>

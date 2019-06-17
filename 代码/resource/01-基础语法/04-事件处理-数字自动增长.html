@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Vue-</title>
+</head>
+
+<body>
+  <div id="app">
+    <p>{{ count }}</p>
+
+    <!-- 
+      事件处理：
+        1. 在选项 methods 中定义处理函数
+        2. 在标签上使用 v-on:事件名="事件处理函数" 绑定事件处理函数
+     -->
+    <button v-on:click="handleClick">点击+1</button>
+    <button v-on:click="handleClick2">methods函数不要使用箭头函数定义，除非你不使用this访问vue实例</button>
+  </div>
+  <script src="js/vue.js"></script>
+  <script>
+    const abc = new Vue({
+      el: '#app',
+      data: {
+        count: 0
+      },
+      // 处理函数定义在 methods 中
+      // 注意：不要使用箭头函数
+      methods: {
+        // handleClick: () => {},
+        // 等价于 handleClick: function () {}，仅仅简写而已，没有任何其它的额外特性
+        handleClick () {
+          // app 是谁？是你 new 出来的 Vue 实例
+          // app.count += 1
+          // methods 函数中的 this 指向 Vue 实例
+          this.count += 1
+        },
+
+        handleClick2: () => {
+          console.log(this)
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

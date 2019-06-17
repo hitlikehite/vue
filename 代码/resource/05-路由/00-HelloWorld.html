@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>VueRouter-HelloWorld</title>
+  <style>
+    .router-link-active {
+      background-color: yellow;
+      color: red;
+    }
+  </style>
+  <!--  -->
+</head>
+
+<body>
+  <div id="app">
+    <h1>VueRouter-HelloWorld</h1>
+    <!-- VueRouter 使用锚点作为其页面标识 -->
+    <ul>
+      <!-- <li><a href="#/">发现音乐</a></li> -->
+      <!-- 
+        VueRouter 建议使用 router-link 当做导航链接
+        route-link 是路由提供的一个全局组件，它内部封装了 a 标签，提供了很多有用的特性
+        to 用来指定要导航的组件地址
+        它会在匹配到组件的时候，自动将与之匹配的导航链接添加一个class类名：router-link-active
+        它会自动自动匹配到它的
+       -->
+      <li><router-link to="/" exact>发现音乐</router-link></li>
+      <li><router-link to="/my">我的音乐</router-link></li>
+      <li><router-link to="/friend">朋友</router-link></li>
+    </ul>
+    <!-- 这里显示不同的页面组件 -->
+    <!-- 
+      路由提供了一个全局组件：router-view
+      它的作用是用来占位的，路由会根据当前页面路径自动决定这个 router-view 是谁
+        / 发现页面组件
+        /my 我的音乐页面组件
+     -->
+    <router-view></router-view>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+  <script>
+    const router = new VueRouter({
+      routes: [ // 配置路由表：告诉 VueRouter 当 url === xxx 的时候，显示  xxx 组件
+        {
+          path: '/',
+          // 路由组件对象，这个组件既不是全局组件也不是局部组件，它是路由组件
+          // 路由组件给谁用的？给路由用的
+          // 组件怎么写，那么路由组件就怎么写
+          // 路由利用 url 中的锚点来作为它识别的标识
+          component: {
+            name: 'Home',
+            template: `
+              <div>
+                <p>发现音乐页面组件</p>
+              </div>
+            `
+          }
+        },
+        {
+          path: '/my',
+          component: {
+            name: 'My',
+            template: `
+              <div>
+                <p>我的音乐页面组件</p>
+              </div>
+            `
+          }
+        },
+        {
+          path: '/friend',
+          component: {
+            name: 'Friend',
+            template: `
+              <div>
+                <p>朋友页面组件</p>
+              </div>
+            `
+          }
+        },
+      ]
+    })
+
+    const app = new Vue({
+      el: '#app',
+      data: {},
+      methods: {},
+      // 最后，将路由实例配置到  Vue 实例的 router 选项中
+      // router: router
+      router
+    })
+  </script>
+</body>
+
+</html>

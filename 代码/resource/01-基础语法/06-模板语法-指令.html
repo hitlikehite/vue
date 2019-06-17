@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Vue-模板语法-指令</title>
+  <!-- 
+    指令 (Directives) 是带有 v- 前缀的特殊标签属性。指令特性的值预期是单个 JavaScript 表达式
+      v-if
+      v-for
+      v-html
+      v-bind
+      v-on
+    使用方式： <标签 指令="JavaScript表达式"></标签>
+    也就是说，{{}} 中怎么写，那么这个指令的值也可以怎么写（大多数情况下都是OK的）
+   -->
+</head>
+
+<body>
+  <div id="app">
+    <h1>模板语法-指令</h1>
+    <h2>v-bind</h2>
+    <p v-bind:title="message + 'abc'">Hello Wolrd</p>
+
+    <h2>v-if</h2>
+    <p v-if="age >= 18">已成年</p>
+
+    <h2>v-text</h2>
+    <!-- v-text 和 {{}} 的作用是一样的 -->
+    <p>{{ message }}</p>
+    <p v-text="message"></p>
+
+    <h2>v-for</h2>
+    <!-- v-for 的语法比较特殊，不能随便写 JavaScript 表达式了 -->
+    <ul>
+      <li v-for="item in nums.filter(n => n % 2 === 0)">{{ item }}</li>
+    </ul>
+
+    <h2>指令参数</h2>
+    <!-- <p v-bind:属性="表达式">Hello World</p> -->
+    <!-- <p v-on:click=""></p> -->
+
+    <h2>指令修饰符</h2>
+    <!-- 
+      form 表单有一个默认事件提交行为
+      .prevent 就是一个指令修饰符，它会在触发事件之后，在内部自动帮你去 e.preventDefault() 了
+     -->
+    <!-- <form v-on:submit.prevent="handleSubmit"> -->
+    <form @submit.prevent="handleSubmit">
+      <button type="submit">点击提交</button>
+    </form>
+
+    <input type="text" @keydown.enter="handleEnter">
+  </div>
+  <script src="js/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        message: 'Hello Vue.js!',
+        age: 18,
+        nums: [1, 2, 3, 4, 5]
+      },
+      methods: {
+        handleSubmit () {
+          console.log('submit 了')
+        },
+        handleEnter () {
+          console.log('enter 了')
+        }
+      }
+    })
+
+    var arr = [1, 2, 3, 4, 5]
+
+    // filter 会在内部
+    //  1. 创建一个新数组
+    //    var tmp = []
+    //  2. 遍历数据数组
+    //  3. 每遍历一次就把当前遍历项以及索引传递给 function (item, index) { return item % 2 === 0 } 调用
+    //     如果 fn 返回 true，就把 item 放到 tmp 中
+    //     如果为 false，就不放
+    //  4. 遍历结束，返回 arr 作为 filter 的结果
+    var newArr = arr.filter(function (item, index) {
+      return item % 2 === 0
+    })
+
+    console.log(newArr)
+  </script>
+</body>
+
+</html>

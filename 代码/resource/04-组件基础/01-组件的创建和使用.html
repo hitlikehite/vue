@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>01-组件的创建和使用</title>
+  <style>
+    .foo {
+      padding: 5px;
+      border: 1px solid #000;
+      margin-bottom: 5px;
+    }
+  </style>
+  <!--  -->
+</head>
+
+<body>
+  <div id="app">
+    <h1>01-组件的创建和使用</h1>
+    <!-- 像使用标签一样来使用组件 -->
+    
+    <!-- 页面头部 -->
+    <!-- <app-header></app-header> -->
+
+    <!-- 页面侧边栏 -->
+    <!-- <app-aside></app-aside> -->
+
+    <!-- 内容组件1 -->
+    <foo></foo>
+
+    <!-- 内容组件2 -->
+    <!-- <bar></bar> -->
+
+    <!-- 页面底部 -->
+    <!-- <app-footer></app-footer> -->
+    <!-- <foo></foo> -->
+    <!-- <p>{{ count }}</p> -->
+    <!-- <foo></foo>
+    <foo></foo>
+    <foo></foo> -->
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <script src="components/foo.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        message: 'app message'
+      },
+      methods: {}
+    })
+  </script>
+</body>
+
+</html>

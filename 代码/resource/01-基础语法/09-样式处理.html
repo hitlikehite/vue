@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>样式处理</title>
+  <style>
+    .color {
+      color: red;
+    }
+
+    .bgc {
+      background-color: yellow;
+    }
+
+    .border {
+      border: 1px solid #000;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <h1>样式处理</h1>
+    <h2>绑定 Class</h2>
+    <p class="color bgc">Hello World</p>
+    <!-- 
+      v-bind:class="{ css类名: 表达式 }"
+      如果表达式计算结果为
+        true 作用该类名
+        false 去除该类名
+     -->
+    <!-- <p v-bind:class="{ color: false, bgc: true }">Hello World</p> -->
+    <p class="border" v-bind:class="{ color: hasColor, bgc: hasBgc }">Hello World</p>
+    <h2>绑定 Style（自行了解）</h2>
+  </div>
+  <script src="js/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        message: 'Hello Vue.js!',
+        hasColor: true,
+        hasBgc: false
+      },
+      methods: {}
+    })
+  </script>
+</body>
+
+</html>
